@@ -6,10 +6,12 @@ namespace Web.Controllers
 {
     public class EventosController : Controller
     {
+        List<EventoVM> lista = new List<EventoVM>();
+
+        public EventosController() { }
         // GET: EventosController
         public ActionResult Index()
         {
-            List<EventoVM> lista = new List<EventoVM>();
             EventoVM evento = new EventoVM();
             evento.FechaEvento = DateTime.Now;
             evento.NombreEvento = "Argetina  - Zambia";
@@ -25,7 +27,7 @@ namespace Web.Controllers
         {
             EventoVM evento = new EventoVM();
             evento.FechaEvento = DateTime.Now;
-            evento.NombreEvento = "Argetina  - Zambia";
+            evento.NombreEvento = "Argentina  - Zambia";
             evento.IdEvento = 2;
             return View(evento);
         }
@@ -80,7 +82,12 @@ namespace Web.Controllers
         // GET: EventosController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            EventoVM evento = new EventoVM();
+            evento.FechaEvento = DateTime.Now;
+            evento.NombreEvento = "Argentina  - Zambia";
+            evento.IdEvento = 2;
+            return View("Borrar" , evento);
         }
 
         // POST: EventosController/Delete/5
