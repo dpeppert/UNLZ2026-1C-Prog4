@@ -8,16 +8,18 @@ namespace Web.Controllers
     {
         List<EventoVM> lista = new List<EventoVM>();
 
-        public EventosController() { }
-        // GET: EventosController
-        public ActionResult Index()
-        {
+        public EventosController() {
             EventoVM evento = new EventoVM();
             evento.FechaEvento = DateTime.Now;
-            evento.NombreEvento = "Argetina  - Zambia";
+            evento.NombreEvento = "Argentina  - Zambia";
             evento.IdEvento = 2;
             lista.Add(new EventoVM { FechaEvento = DateTime.Now, IdEvento = 1, NombreEvento = "Maria Becerra" });
             lista.Add(evento);
+        }
+        // GET: EventosController
+        public ActionResult Index()
+        {
+            
 
             return View(lista);
         }
@@ -25,10 +27,7 @@ namespace Web.Controllers
         // GET: EventosController/Details/5
         public ActionResult Details(int id)
         {
-            EventoVM evento = new EventoVM();
-            evento.FechaEvento = DateTime.Now;
-            evento.NombreEvento = "Argentina  - Zambia";
-            evento.IdEvento = 2;
+            var evento = this.lista.First(x => x.IdEvento == id);
             return View(evento);
         }
 
@@ -41,10 +40,13 @@ namespace Web.Controllers
         // POST: EventosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(EventoVM collection)
         {
             try
             {
+                
+                this.lista.Add(collection);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -56,21 +58,23 @@ namespace Web.Controllers
         // GET: EventosController/Edit/5
         public ActionResult Edit(int id)
         {
+            var evento = this.lista.First(x => x.IdEvento == id);
 
-            EventoVM evento = new EventoVM();
-            evento.FechaEvento = DateTime.Now;
-            evento.NombreEvento = "Argetina  - Zambia";
-            evento.IdEvento = 2;
             return View(evento);
         }
 
         // POST: EventosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [FromBody]EventoVM asd )
         {
             try
             {
+                EventoVM evento = this.lista.First(x => x.IdEvento == id);
+                evento.FechaEvento = asd.FechaEvento;
+                evento.NombreEvento = asd.NombreEvento;
+                
+
                 return RedirectToAction(nameof(Index));
             }
             catch
