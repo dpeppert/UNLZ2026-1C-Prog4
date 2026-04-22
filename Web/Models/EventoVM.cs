@@ -6,9 +6,10 @@ namespace Web.Models
 {
     public class EventoVM
     {
-//        [Key]
+        [Key]
         public int IdEvento { get; set; }
 
+        [MaxLength(100)]
         public string NombreEvento { get; set; }
 
         public DateTime FechaEvento { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Web.Data;
 using Web.Models;
 
 namespace Web.Controllers
@@ -7,19 +8,15 @@ namespace Web.Controllers
     public class EventosController : Controller
     {
         List<EventoVM> lista = new List<EventoVM>();
+        private AppDbContext _context;
 
-        public EventosController() {
-            EventoVM evento = new EventoVM();
-            evento.FechaEvento = DateTime.Now;
-            evento.NombreEvento = "Argentina  - Zambia";
-            evento.IdEvento = 2;
-            lista.Add(new EventoVM { FechaEvento = DateTime.Now, IdEvento = 1, NombreEvento = "Maria Becerra" });
-            lista.Add(evento);
+        public EventosController( AppDbContext context ) {
+            _context = context;
         }
         // GET: EventosController
         public ActionResult Index()
         {
-            
+            lista = _context.Eventos.ToList();
 
             return View(lista);
         }
@@ -27,7 +24,7 @@ namespace Web.Controllers
         // GET: EventosController/Details/5
         public ActionResult Details(int id)
         {
-            var evento = this.lista.First(x => x.IdEvento == id);
+            var evento = _context.Eventos.First(x => x.IdEvento == id);
             return View(evento);
         }
 
@@ -40,13 +37,15 @@ namespace Web.Controllers
         // POST: EventosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EventoVM collection)
+        public ActionResult Create(EventoVM evento)
         {
             try
             {
-                
-                this.lista.Add(collection);
+                evento.IdEvento = 0;
+                _context.Eventos.Add(evento);
 
+                _context.SaveChanges();
+                
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -56,24 +55,27 @@ namespace Web.Controllers
         }
 
         // GET: EventosController/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            var evento = this.lista.First(x => x.IdEvento == id);
+            var evento = _context.Eventos.First(x => x.IdEvento == id);
 
             return View(evento);
         }
 
         // POST: EventosController/Edit/5
-        [HttpPost]
+        [HttpPost("/Eventos/Editar")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [FromBody]EventoVM asd )
+        public ActionResult Editar(IFormCollection collection)
         {
             try
             {
-                EventoVM evento = this.lista.First(x => x.IdEvento == id);
-                evento.FechaEvento = asd.FechaEvento;
-                evento.NombreEvento = asd.NombreEvento;
-                
+                int idEvento = int.Parse(collection["IdEvento"]);
+                EventoVM evento = _context.Eventos.First(x => x.IdEvento == idEvento);
+                evento.FechaEvento = new DateTime();// collection["FechaEvento"]);
+                evento.NombreEvento = collection["NombreEvento"];
+
+                _context.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -101,6 +103,9 @@ namespace Web.Controllers
         {
             try
             {
+                EventoVM evento = _context.Eventos.First(x => x.IdEvento == id);
+                _context.Eventos.Remove(evento);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
