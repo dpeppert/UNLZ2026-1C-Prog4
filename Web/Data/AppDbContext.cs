@@ -9,6 +9,8 @@ namespace Web.Data
         public DbSet<EventoVM> Eventos { get; set; }
 
         public DbSet<Usuario> Usuarios { get; set; }
+
+        public DbSet<Provincia> Provincias { get; set; }
         // Ensure this constructor exists
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
