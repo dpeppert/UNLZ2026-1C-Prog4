@@ -45,6 +45,11 @@ namespace Web.Controllers
                 _context.Eventos.Add(evento);
 
                 _context.SaveChanges();
+
+               if (1 == 1)
+                {
+
+                }
                 
                 return RedirectToAction(nameof(Index));
             }
