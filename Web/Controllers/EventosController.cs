@@ -46,10 +46,6 @@ namespace Web.Controllers
 
                 _context.SaveChanges();
 
-               if (1 == 1)
-                {
-
-                }
                 
                 return RedirectToAction(nameof(Index));
             }
