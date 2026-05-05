@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Data.Tables;
 using Web.Models;
@@ -18,7 +20,7 @@ namespace Web.Controllers
         public ActionResult Index()
         {
             lista = _context.Eventos.ToList();
-
+            lista = _context.Eventos.Include(x => x.Provincia).ToList();
             return View(lista);
         }
 
@@ -61,7 +63,16 @@ namespace Web.Controllers
         public ActionResult Edit(int id)
         {
             var evento = _context.Eventos.First(x => x.IdEvento == id);
+            var provincias = _context.Provincias;
 
+            ViewBag.SelectProvincias = new SelectList(provincias, "IdProvincia", "Descripcion"); ;
+
+            ViewBag.Provincias = provincias.Select(x => new SelectListItem
+            {
+                Value = x.IdProvincia.ToString(),
+                Text = x.Descripcion
+            })
+                    .ToList();
             return View(evento);
         }
 
@@ -72,10 +83,18 @@ namespace Web.Controllers
         {
             try
             {
+                int idProvincia = 0;
+
                 int idEvento = int.Parse(collection["IdEvento"]);
                 Evento evento = _context.Eventos.First(x => x.IdEvento == idEvento);
                 evento.FechaEvento = new DateTime();// collection["FechaEvento"]);
                 evento.NombreEvento = collection["NombreEvento"];
+                //, out idProvincia);
+                evento.IdProvincia = int.Parse(collection["IdProvincia"].ToString()); ;
+                evento.IdUbicacion = int.Parse(collection["IdUbicacion"].ToString());
+                //  evento.Activo = bool.Parse(collection["Activo"].ToString());
+                
+
 
                 _context.SaveChanges();
 

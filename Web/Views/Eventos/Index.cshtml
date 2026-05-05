@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.NombreEvento)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Provincia)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FechaEvento)
             </th>
             <th></th>
@@ -33,6 +36,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NombreEvento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provincia.Descripcion);
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaEvento)

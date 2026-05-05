@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Data;
 
@@ -11,9 +12,11 @@ using Web.Data;
 namespace Web.Data.Migrations.DbContext
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260505220110_AutoMigration_DemoUNLZ_20260505190052")]
+    partial class AutoMigration_DemoUNLZ_20260505190052
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,29 +99,15 @@ namespace Web.Data.Migrations.DbContext
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEvento"));
 
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("FechaEvento")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("IdProvincia")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdUbicacion")
-                        .HasColumnType("int");
 
                     b.Property<string>("NombreEvento")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("ProvinciaIdProvincia")
-                        .HasColumnType("int");
-
                     b.HasKey("IdEvento");
-
-                    b.HasIndex("ProvinciaIdProvincia");
 
                     b.ToTable("Eventos");
                 });
@@ -216,15 +205,6 @@ namespace Web.Data.Migrations.DbContext
                         });
 
                     b.Navigation("Audit");
-                });
-
-            modelBuilder.Entity("Web.Data.Tables.Evento", b =>
-                {
-                    b.HasOne("Web.Data.Tables.Provincia", "Provincia")
-                        .WithMany()
-                        .HasForeignKey("ProvinciaIdProvincia");
-
-                    b.Navigation("Provincia");
                 });
 #pragma warning restore 612, 618
         }

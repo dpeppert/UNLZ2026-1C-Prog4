@@ -12,5 +12,13 @@ namespace Web.Data.Tables
 
         public DateTime FechaEvento { get; set; }
 
+
+        public int? IdProvincia { get; set; }
+        public Provincia? Provincia { get; set; }
+
+        public int IdUbicacion { get; set; }
+
+        public bool Activo { get; set; }
+
     }
 }

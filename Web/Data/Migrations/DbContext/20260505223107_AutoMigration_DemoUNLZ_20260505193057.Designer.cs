@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Data;
 
@@ -11,9 +12,11 @@ using Web.Data;
 namespace Web.Data.Migrations.DbContext
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260505223107_AutoMigration_DemoUNLZ_20260505193057")]
+    partial class AutoMigration_DemoUNLZ_20260505193057
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,9 +98,6 @@ namespace Web.Data.Migrations.DbContext
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEvento"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaEvento")
                         .HasColumnType("datetime2");

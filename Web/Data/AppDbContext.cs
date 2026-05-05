@@ -27,6 +27,8 @@ namespace Web.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Compra>().OwnsOne(c => c.Audit);
+
+            modelBuilder.Entity<Evento>().HasOne(x => x.Provincia);
         }
 
     }
