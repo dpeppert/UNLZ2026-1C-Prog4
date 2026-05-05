@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Data;
+using Web.Data.Tables;
 using Web.Models;
 
 namespace Web.Controllers
 {
     public class EventosController : Controller
     {
-        List<EventoVM> lista = new List<EventoVM>();
+        List<Evento> lista = new List<Evento>();
         private AppDbContext _context;
 
         public EventosController( AppDbContext context ) {
@@ -37,7 +38,7 @@ namespace Web.Controllers
         // POST: EventosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EventoVM evento)
+        public ActionResult Create(Evento evento)
         {
             try
             {
@@ -72,7 +73,7 @@ namespace Web.Controllers
             try
             {
                 int idEvento = int.Parse(collection["IdEvento"]);
-                EventoVM evento = _context.Eventos.First(x => x.IdEvento == idEvento);
+                Evento evento = _context.Eventos.First(x => x.IdEvento == idEvento);
                 evento.FechaEvento = new DateTime();// collection["FechaEvento"]);
                 evento.NombreEvento = collection["NombreEvento"];
 
@@ -104,7 +105,7 @@ namespace Web.Controllers
         {
             try
             {
-                EventoVM evento = _context.Eventos.First(x => x.IdEvento == id);
+                Evento evento = _context.Eventos.First(x => x.IdEvento == id);
                 _context.Eventos.Remove(evento);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Data;
 
@@ -11,9 +12,11 @@ using Web.Data;
 namespace Web.Data.Migrations.DbContext
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260428220943_AutoMigration_DemoUNLZ_20260428190934")]
+    partial class AutoMigration_DemoUNLZ_20260428190934
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,42 +169,6 @@ namespace Web.Data.Migrations.DbContext
                     b.HasKey("IdUsuario");
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("Web.Data.Tables.Compra", b =>
-                {
-                    b.OwnsOne("Web.Data.Tables.Audit", "Audit", b1 =>
-                        {
-                            b1.Property<int>("CompraIdCompra")
-                                .HasColumnType("int");
-
-                            b1.Property<DateTime>("FechaAlta")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<DateTime?>("FechaBaja")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<DateTime?>("FechaModificacion")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<int>("IdUsuarioAlta")
-                                .HasColumnType("int");
-
-                            b1.Property<int?>("IdUsuarioBaja")
-                                .HasColumnType("int");
-
-                            b1.Property<int?>("IdUsuarioModificacion")
-                                .HasColumnType("int");
-
-                            b1.HasKey("CompraIdCompra");
-
-                            b1.ToTable("Compras");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CompraIdCompra");
-                        });
-
-                    b.Navigation("Audit");
                 });
 #pragma warning restore 612, 618
         }
